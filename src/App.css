@@ -32,3 +32,7 @@
   float: center;
   color: rgb(11, 18, 109);
 }
+
+form {
+  padding: 10px;
+}

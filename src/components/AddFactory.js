@@ -1,28 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { ExpansionPanel, Button, TextField, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ExpansionPanel, Button, TextField } from '@material-ui/core';
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      width: '100%',
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  }));
+  
 
 
 export class AddFactory extends Component {
@@ -43,12 +24,23 @@ export class AddFactory extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        var cNodes = [];
+        var numbers = [];
+        
+        for (var i=0; i < this.state.numberOfNodes; i++) {
+            numbers.push(Math.random());
+        };
+        console.log(numbers);
+
+        cNodes = numbers.map((num) => num = Math.round(((this.state.upperBound-this.state.lowerBound)*num) + this.state.lowerBound),0);
+
+        console.log(cNodes);
 
         this.props.addFactory( {name: this.state.name, 
             upperBound: this.state.upperBound, 
             lowerBound: this.state.lowerBound, 
-            childNodes: this.state.childNodes, 
-            numberOfNodes: this.state.childNodes.length
+            childNodes: cNodes, 
+            numberOfNodes: this.state.numberOfNodes
 
         });
         
@@ -62,7 +54,11 @@ export class AddFactory extends Component {
 
     render() {
         return (
-            <ExpansionPanel>
+            <div>
+ 
+
+
+    <ExpansionPanel>
             <form onSubmit={this.onSubmit} >
                 <TextField 
                     type="text" 
@@ -115,6 +111,11 @@ export class AddFactory extends Component {
 
             </form>
             </ExpansionPanel>
+
+
+
+            </div>
+           
         )
     }
 }

@@ -6,18 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-}));
 
 
 
@@ -29,7 +18,7 @@ export class Factory extends Component {
         //console.log(childNodes);
         return (
             <React.Fragment>
-<ExpansionPanel>
+<ExpansionPanel key={_id}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
@@ -40,7 +29,7 @@ export class Factory extends Component {
         <ExpansionPanelDetails>
           <Typography>
             childnodes {childNodes.map((num) => {
-                return <p>{num}</p>;
+                return <ul>{num}</ul>;
             })}
             <p>Upper Limit : {upperBound}</p>
             <p>Lower Limit : {lowerBound}</p>

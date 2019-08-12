@@ -4,10 +4,6 @@ import './App.css';
 import Factories from './components/Factories';
 import axios from 'axios';
 import AddFactory from './components/AddFactory';
-import ButtonAppBar from './layout/Header';
-import AdjustFactory from './components/AdjustFactory';
-import DummyExpansionFunction from './components/DummyExpansionFunction';
-import DummyExpansionPanel from './components/DummyExpansionPanel';
 
 class App extends Component {
   state = {
@@ -28,12 +24,12 @@ class App extends Component {
           name: newFactory.name,
           lowerBound: newFactory.lowerBound,
           upperBound: newFactory.upperBound,
-          childNodes: [1,2,3]
+          childNodes: newFactory.childNodes
           })
 
           .then(res => { 
             //res.data.id = uuid.v4();
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({ factories:[...this.state.factories, res.data.createdFactory] })
           });
         
@@ -51,26 +47,28 @@ class App extends Component {
       );
   };
 
-/*
+
   updateFactory = (_id) => {
     axios 
-      .patch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(res => 
-        this.setState({
-          factories:
-        })  )
+        .patch(`https://jsonplaceholder.typicode.com/todos/${_id}`,   [
+        {"propName": "name", "value": "first and best factory" },
+        {"propName": "lowerBound", "value": "3"}
+      ]
+      )
+      .then(response => 
+            console.log(response));
   }
-  */
+  
 
 
 
   render() {
     return (
-      <div className="App">
-        <ButtonAppBar />
+      <div className="App" >
+ 
         <AddFactory addFactory={this.addFactory}/>
         <h1 className="headerLabel">Factories</h1>
-        <Factories factories = { this.state.factories } delFactory={ this.delFactory}/>
+        <Factories key={this.state.factories._id} factories = { this.state.factories } delFactory={ this.delFactory}/>
 
         
       </div>

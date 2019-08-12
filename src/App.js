@@ -6,6 +6,8 @@ import axios from 'axios';
 import AddFactory from './components/AddFactory';
 import ButtonAppBar from './layout/Header';
 import AdjustFactory from './components/AdjustFactory';
+import DummyExpansionFunction from './components/DummyExpansionFunction';
+import DummyExpansionPanel from './components/DummyExpansionPanel';
 
 class App extends Component {
   state = {
@@ -22,42 +24,35 @@ class App extends Component {
   addFactory = (newFactory) => {
     axios
         .post('http://localhost:3004/factories', {
-            
-            name: 'samM',
-            lowerBound: '1',
-            upperBound: '5',
-            childNodes: [1,2,3]
-
-/*
-            name: newFactory.name,
-            lowerBound: newFactory.lowerBound,
-            upperBound: newFactory.lowerBound,
-            childNodes: [1,2,3]
-*/
-
+                  
+          name: newFactory.name,
+          lowerBound: newFactory.lowerBound,
+          upperBound: newFactory.upperBound,
+          childNodes: [1,2,3]
           })
 
           .then(res => { 
             //res.data.id = uuid.v4();
-            this.setState({ factories:[...this.state.factories, res.createdFactories] })
+            console.log(res.data);
+            this.setState({ factories:[...this.state.factories, res.data.createdFactory] })
           });
         
   }
 
 
   // Delete Factory
-  delFactory = (id) => {
+  delFactory = (_id) => {
     axios
-      .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .delete(`http://localhost:3004/factories/${_id}`)
       .then(res =>
          this.setState({ 
-           factories: [...this.state.factories.filter(factory => factory.id !== id)]
+           factories: [...this.state.factories.filter(factory => factory._id !== _id)]
           })
       );
   };
 
 /*
-  updateFactory = (id) => {
+  updateFactory = (_id) => {
     axios 
       .patch(`https://jsonplaceholder.typicode.com/todos/${id}`)
       .then(res => 
@@ -74,8 +69,9 @@ class App extends Component {
       <div className="App">
         <ButtonAppBar />
         <AddFactory addFactory={this.addFactory}/>
-        <h2 className="headerLabel">Factories</h2>
+        <h1 className="headerLabel">Factories</h1>
         <Factories factories = { this.state.factories } delFactory={ this.delFactory}/>
+
         
       </div>
     );
